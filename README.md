@@ -1,4 +1,4 @@
-# GG Studio — public site (GitHub Pages)
+# Full Send Studios — public site (GitHub Pages)
 
 Two static pages, safe to host publicly. **No costs, ROI, budgets, approvals, or file paths appear here** — those stay in the private Cowork console + Notion.
 
@@ -7,7 +7,7 @@ Two static pages, safe to host publicly. **No costs, ROI, budgets, approvals, or
 
 ## Before you publish — edit these
 In `index.html`:
-- Brand name `GG Studio` → your studio name (appears in the nav, footer, and `<title>`).
+- Brand name `Full Send Studios` → your studio name (appears in the nav, footer, and `<title>`).
 - The contact email — replace `CHANGE-ME@example.com`.
 - The "In the studio now" line (hero) — current project + stage.
 
