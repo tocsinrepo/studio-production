@@ -1,0 +1,11 @@
+# Never commit anything sensitive to the PUBLIC site repo.
+# Internal dashboard (costs / ROI / budget / approvals)
+sky-studio-production-control.html
+# Notion / API secrets
+*.env
+.env*
+*token*
+*secret*
+# OS noise
+.DS_Store
+Thumbs.db

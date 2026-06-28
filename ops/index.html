@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GG Studio — Live Ops</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#0b0d10;--surface:#151a21;--border:#252c37;--border2:#323b48;--text:#e7ebf2;--muted:#8b94a4;--faint:#5c6573;
+    --sky:#38bdf8;--green:#34d399;--amber:#f5b14c;--red:#fb6f6f;--mono:'JetBrains Mono',monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1100px 560px at 80% -10%,rgba(56,189,248,.08),transparent 60%),var(--bg);
+    color:var(--text);font-family:'Inter',system-ui,sans-serif;padding:0 6vw 70px}
+  .wrap{max-width:1120px;margin:0 auto}
+  header{padding:34px 0 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:40px;height:40px;border-radius:11px;background:linear-gradient(145deg,var(--sky),#a78bfa);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:20px;color:#06121b}
+  h1{font-family:'Space Grotesk';font-weight:700;font-size:22px;margin:0}
+  .sub{color:var(--muted);font-size:13px;margin-top:2px}
+  .pill{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:5px 11px;border-radius:999px;border:1px solid var(--border2);color:var(--muted)}
+  h2{font-family:'Space Grotesk';font-weight:600;font-size:14px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);margin:34px 0 14px;display:flex;align-items:center;gap:9px}
+  h2 .dot{width:7px;height:7px;border-radius:50%;background:var(--sky)}
+  .here{font-size:13px;color:var(--muted);margin:-4px 0 16px}
+  .here b{color:var(--text)}
+  .banner{border-radius:11px;padding:11px 15px;font-size:13px;margin-bottom:8px;background:rgba(245,177,76,.1);border:1px solid rgba(245,177,76,.42);color:var(--text)}
+  .pipe{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:8px}
+  .node{min-width:178px;flex:1;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:14px}
+  .node.active{border-color:var(--sky);box-shadow:0 0 0 1px var(--sky),0 10px 30px rgba(56,189,248,.15)}
+  .conn{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:46px}
+  .arrow{color:var(--border2);font-size:18px}
+  .gate{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--amber);background:rgba(245,177,76,.1);border:1px solid rgba(245,177,76,.4);border-radius:7px;padding:3px 5px;text-align:center;margin-bottom:6px;max-width:46px;line-height:1.25}
+  .sn{font-family:var(--mono);font-size:10.5px;color:var(--faint);font-weight:700}
+  .snm{font-family:'Space Grotesk';font-weight:600;font-size:13.5px;margin:3px 0 8px}
+  .badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+  .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+  .b-done{color:var(--green);background:rgba(52,211,153,.1)}.b-active{color:var(--sky);background:rgba(56,189,248,.12)}
+  .b-queued{color:var(--faint);background:rgba(140,148,164,.1)}.b-blocked{color:var(--red);background:rgba(251,111,111,.12)}
+  .owner{font-size:11.5px;color:var(--muted);margin-top:9px}.owner b{color:var(--text)}
+  .you{font-size:9.5px;font-weight:700;text-transform:uppercase;color:#06121b;background:var(--sky);padding:2px 7px;border-radius:999px;float:right}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:760px){.board{grid-template-columns:repeat(2,1fr)}}
+  .col{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+  .col h3{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);margin:0 0 10px;display:flex;justify-content:space-between}
+  .col h3 .ct{font-family:var(--mono)}
+  .card{background:#1b212b;border:1px solid var(--border);border-radius:9px;padding:9px 10px;margin-bottom:8px}
+  .card:last-child{margin-bottom:0}.card .t{font-weight:600;font-size:12.5px}
+  .card .m{font-size:10.5px;color:var(--muted);margin-top:4px;font-family:var(--mono)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:11.5px;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}.sw{width:9px;height:9px;border-radius:50%}
+  footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);font-size:12px;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="logo">G</div><div><h1>GG Studio · Live Ops</h1><div class="sub">Production pipeline — what's moving right now</div></div></div>
+    <span class="pill" id="ts">computed —</span>
+  </header>
+
+  <h2><span class="dot"></span> Pipeline — where it is now</h2>
+  <div class="here" id="here">—</div>
+  <div class="banner" id="timeliness">⏱ <b>Timeliness (ET):</b> the June 27 recap is a day late as of June 28 ET — shipping as evergreen or pivoting to the June 28 cut.</div>
+  <div class="pipe" id="pipe" style="margin-top:12px"></div>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--green)"></span> Done</span>
+    <span><span class="sw" style="background:var(--sky)"></span> Active</span>
+    <span><span class="sw" style="background:var(--faint)"></span> Queued</span>
+    <span style="color:var(--amber)">◆ Quality gate</span>
+  </div>
+
+  <h2><span class="dot"></span> Portfolio board</h2>
+  <div class="board" id="board"></div>
+
+  <footer>Live ops mirror · throughput &amp; quality only — budgets, costs, and margins are kept in the private console. GG Studio.</footer>
+</div>
+<script>
+const STAGES=[
+  {no:"0",name:"Brief & Greenlight",owner:"Sky",status:"done"},
+  {no:"1",name:"Alignment & Rubric",owner:"Steven + Bobby",status:"done"},
+  {no:"2",name:"Pre-Production",owner:"Steven",status:"active",gate:"GATE ① ≥8/10"},
+  {no:"3",name:"Production",owner:"Nolan",status:"queued"},
+  {no:"4",name:"First-Cut Review",owner:"Bobby",status:"queued",gate:"GATE ② clears"},
+  {no:"5",name:"Ship & Measure",owner:"Sky",status:"queued"}
+];
+const BOARD={
+  "Backlog":[{t:"INSPIRE — Values poster reel",m:"IG Reel"},{t:"Cornerstones — Explainer short",m:"TikTok"}],
+  "In Production":[{t:"Haru Recap Reel — June",m:"IG Reel · Stage 2"}],
+  "In Review":[],"Shipped":[]
+};
+const active=STAGES.find(s=>s.status==="active");
+document.getElementById("here").innerHTML="Active project <b>Haru Recap Reel — June</b> is at <b style='color:var(--sky)'>Stage "+active.no+" · "+active.name+"</b> — package drafted, holding at Gate ① for sign-off + verified results. No media generates until it clears 8/10.";
+document.getElementById("ts").textContent="computed "+new Date().toLocaleString();
+const pipe=document.getElementById("pipe");
+STAGES.forEach((s,i)=>{
+  const n=document.createElement("div");n.className="node "+s.status;
+  const b={done:"b-done",active:"b-active",queued:"b-queued",blocked:"b-blocked"}[s.status];
+  n.innerHTML=(s.status==="active"?'<span class="you">● here</span>':'')+
+    '<div class="sn">STAGE '+s.no+'</div><div class="snm">'+s.name+'</div>'+
+    '<span class="badge '+b+'">'+s.status+'</span><div class="owner">Owner · <b>'+s.owner+'</b></div>';
+  pipe.appendChild(n);
+  if(i<STAGES.length-1){const c=document.createElement("div");c.className="conn";
+    c.innerHTML=(s.gate?'<div class="gate">'+s.gate+'</div>':'')+'<div class="arrow">→</div>';pipe.appendChild(c);}
+});
+const board=document.getElementById("board");
+Object.entries(BOARD).forEach(([col,items])=>{
+  const d=document.createElement("div");d.className="col";
+  d.innerHTML='<h3>'+col+'<span class="ct">'+items.length+'</span></h3>'+items.map(it=>'<div class="card"><div class="t">'+it.t+'</div><div class="m">'+it.m+'</div></div>').join("");
+  board.appendChild(d);
+});
+</script>
+</body>
+</html>
